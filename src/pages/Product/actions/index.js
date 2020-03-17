@@ -39,4 +39,24 @@ export const minusQuantity = quantity => ({
   type: 'MINUS_QUANTITY',
   quantity,
 })
+
 //加入購物車
+export const saveProductSizeToCart = size => ({
+  type: 'SAVE_SIZE',
+  size,
+})
+
+export const saveProductColorToCart = color => ({
+  type: 'SAVE_COLOR',
+  color,
+})
+
+export const saveProductQTYToCart = qty => ({
+  type: 'SAVE_QTY',
+  qty,
+})
+
+export const saveProductToCart = product => ({
+  type: 'SAVE_PRODUCT',
+  product,
+})

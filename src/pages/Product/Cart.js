@@ -1,9 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, ButtonGroup, Button, Card } from 'react-bootstrap'
 import { MdPlaylistAdd, MdDelete, MdAddShoppingCart } from 'react-icons/md'
+
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
 import $ from 'jquery'
-const Cart = () => {
+const Cart = props => {
   const [total, setTotal] = useState(1)
+
+  //取得所有購物車內的id清單
+  const idList = Object.keys(props.addCart)
+
+  useEffect(() => {
+    setTotal(props.addCart[idList].qty)
+  }, [])
+
   return (
     //   判斷式如果購物車有東西才顯示，沒有則顯示沒有東西出現選購按鈕
     <>
@@ -89,9 +101,9 @@ const Cart = () => {
                 alt="..."
               />
               <Col md={2}>
-                <h3>商品名稱</h3>
-                <h4>尺寸:小</h4>
-                <h4>顏色:紅</h4>
+                <h3>{props.addCart[idList[0]].pName}</h3>
+                <h4>尺寸:{props.addCart[idList[0]].size}</h4>
+                <h4>顏色:{props.addCart[idList[0]].color}</h4>
               </Col>
               <Col md={2}>
                 <ButtonGroup className="mb-md-2">
@@ -329,4 +341,12 @@ const Cart = () => {
   )
 }
 
-export default Cart
+const mapStateToProps = store => {
+  return {
+    total: store.counter,
+    detail: store.getProduct,
+    addCart: store.saveProductToCart,
+  }
+}
+
+export default withRouter(connect(mapStateToProps)(Cart))
